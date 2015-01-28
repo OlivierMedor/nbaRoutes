@@ -1,7 +1,7 @@
 var app = angular.module('nbaRoutes');
 
-app.service('teamService', function($http, $q){
-	var addNewGame = function(gameObject) {
+app.service('teamService', function teamService($http, $q){
+	 this.addNewGame = function(gameObject) {
 		 url = "https://api.parse.com/1/classes/" + gameObj.homeTeam;
 		if(parseInt(gameObj.homeTeamScore) > parseInt(gameObj.opponentScore)) {
 			gameObj.won = true;
@@ -19,9 +19,9 @@ app.service('teamService', function($http, $q){
 
 	}
 
-	var getTeamData = function(team) {
+	this.getTeamData = function(team) {
 		var deferred = $q.defer();
-		 url = 'https://api.parse.com/1/classes/' + team;
+		 url = 'https://api.parse.com/1/classes/'+team;
 		$http({
 			url: url,
 			method: 'GET',
@@ -34,11 +34,12 @@ app.service('teamService', function($http, $q){
 					wins = wins + 1;
 				}
 				else{
-					lossess = losses + 1;
+					losses = losses + 1;
 				}
 			};
 			results.wins = wins;
 			results.losses = losses;
+			deferred.resolve(results)
 		})
 
 
